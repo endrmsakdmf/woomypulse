@@ -1,39 +1,39 @@
 {
   "status": "success",
-  "refreshedAt": "2026-10-26T20:31:17.242573+09:00",
+  "refreshedAt": "2026-10-26T20:32:42.484581+09:00",
   "scope": {
     "totalSeen": 4432,
     "readEligible": 4402,
     "unreadExcluded": 30,
-    "reviewed": 130,
-    "pendingReview": 4277,
+    "reviewed": 210,
+    "pendingReview": 4197,
     "oldestFound": "2024-05"
   },
   "summary": {
-    "reviewed": 130,
-    "success": 20,
+    "reviewed": 210,
+    "success": 44,
     "failure": 13,
-    "inProgress": 97,
+    "inProgress": 153,
     "needsReview": 0,
-    "successRate": 15,
+    "successRate": 21,
     "successDefinition": "배송 진행·완료"
   },
   "sources": [
     {
       "name": "확인 필요",
-      "count": 89
+      "count": 147
     },
     {
       "name": "홈페이지",
-      "count": 21
-    },
-    {
-      "name": "네이버 블로그",
-      "count": 7
+      "count": 24
     },
     {
       "name": "기존 고객",
-      "count": 4
+      "count": 22
+    },
+    {
+      "name": "네이버 블로그",
+      "count": 8
     },
     {
       "name": "네이버 지식인",
@@ -59,27 +59,27 @@
   "categories": [
     {
       "name": "기타 구매대행",
-      "count": 60
+      "count": 110
+    },
+    {
+      "name": "사업자 물류",
+      "count": 47
     },
     {
       "name": "가구·대형화물",
       "count": 29
     },
     {
-      "name": "사업자 물류",
-      "count": 18
-    },
-    {
       "name": "자전거",
       "count": 11
     },
     {
-      "name": "티켓",
+      "name": "의류",
       "count": 5
     },
     {
-      "name": "의류",
-      "count": 4
+      "name": "티켓",
+      "count": 5
     },
     {
       "name": "명품 구매대행",
@@ -89,25 +89,25 @@
   "funnel": [
     {
       "name": "문의 확인",
-      "count": 130
+      "count": 210
     },
     {
       "name": "견적·안내",
-      "count": 72
+      "count": 109
     },
     {
       "name": "결제 확인",
-      "count": 38
+      "count": 64
     },
     {
       "name": "배송 진행·완료",
-      "count": 20
+      "count": 44
     }
   ],
   "lossReasons": [
     {
       "name": "구매 여부 미확정",
-      "count": 97
+      "count": 153
     },
     {
       "name": "기타 중단 이유",
@@ -137,24 +137,24 @@
     "견적 뒤 1일, 3일, 7일에 다시 연락하고 결과를 남기세요.",
     "취급 불가 상품은 가능한 대안을 함께 알려주세요."
   ],
-  "methodology": "전체 상담 목록 4,432건을 찾았습니다. 읽지 않은 30건은 열지 않았습니다. 현재 본문까지 확인한 130건만 성과 계산에 사용합니다. 각 단계 비율은 확인한 첫 문의 130건을 100%로 계산합니다. 최종 성공은 배송 진행·완료가 대화에서 확인된 20건만 셌습니다. 구매 여부 미확정은 실패가 아닙니다.",
+  "methodology": "전체 상담 목록 4,432건을 찾았습니다. 읽지 않은 30건은 열지 않았습니다. 현재 본문까지 확인한 210건만 성과 계산에 사용합니다. 각 단계 비율은 확인한 첫 문의 210건을 100%로 계산합니다. 최종 성공은 배송 진행·완료가 대화에서 확인된 44건만 셌습니다. 구매 여부 미확정은 실패가 아닙니다.",
   "details": {
     "sources": [
       {
         "name": "확인 필요",
-        "total": 89,
+        "total": 147,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 47
+            "count": 92
+          },
+          {
+            "name": "사업자 물류",
+            "count": 22
           },
           {
             "name": "가구·대형화물",
             "count": 19
-          },
-          {
-            "name": "사업자 물류",
-            "count": 10
           },
           {
             "name": "자전거",
@@ -162,7 +162,7 @@
           },
           {
             "name": "의류",
-            "count": 4
+            "count": 5
           },
           {
             "name": "티켓",
@@ -176,11 +176,11 @@
       },
       {
         "name": "홈페이지",
-        "total": 21,
+        "total": 24,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 6
+            "count": 7
           },
           {
             "name": "가구·대형화물",
@@ -191,11 +191,11 @@
             "count": 4
           },
           {
-            "name": "자전거",
-            "count": 2
+            "name": "사업자 물류",
+            "count": 4
           },
           {
-            "name": "사업자 물류",
+            "name": "자전거",
             "count": 2
           },
           {
@@ -205,9 +205,27 @@
         ]
       },
       {
-        "name": "네이버 블로그",
-        "total": 7,
+        "name": "기존 고객",
+        "total": 22,
         "services": [
+          {
+            "name": "사업자 물류",
+            "count": 17
+          },
+          {
+            "name": "기타 구매대행",
+            "count": 5
+          }
+        ]
+      },
+      {
+        "name": "네이버 블로그",
+        "total": 8,
+        "services": [
+          {
+            "name": "사업자 물류",
+            "count": 3
+          },
           {
             "name": "가구·대형화물",
             "count": 2
@@ -215,24 +233,6 @@
           {
             "name": "자전거",
             "count": 2
-          },
-          {
-            "name": "사업자 물류",
-            "count": 2
-          },
-          {
-            "name": "기타 구매대행",
-            "count": 1
-          }
-        ]
-      },
-      {
-        "name": "기존 고객",
-        "total": 4,
-        "services": [
-          {
-            "name": "사업자 물류",
-            "count": 3
           },
           {
             "name": "기타 구매대행",
@@ -298,31 +298,31 @@
     "funnel": [
       {
         "name": "문의 확인",
-        "total": 130,
+        "total": 210,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 60
+            "count": 110
+          },
+          {
+            "name": "사업자 물류",
+            "count": 47
           },
           {
             "name": "가구·대형화물",
             "count": 29
           },
           {
-            "name": "사업자 물류",
-            "count": 18
-          },
-          {
             "name": "자전거",
             "count": 11
           },
           {
-            "name": "티켓",
+            "name": "의류",
             "count": 5
           },
           {
-            "name": "의류",
-            "count": 4
+            "name": "티켓",
+            "count": 5
           },
           {
             "name": "명품 구매대행",
@@ -332,19 +332,19 @@
       },
       {
         "name": "견적·안내",
-        "total": 72,
+        "total": 109,
         "services": [
           {
-            "name": "가구·대형화물",
-            "count": 23
-          },
-          {
             "name": "기타 구매대행",
-            "count": 22
+            "count": 36
           },
           {
             "name": "사업자 물류",
-            "count": 12
+            "count": 34
+          },
+          {
+            "name": "가구·대형화물",
+            "count": 23
           },
           {
             "name": "자전거",
@@ -360,25 +360,25 @@
           },
           {
             "name": "의류",
-            "count": 1
+            "count": 2
           }
         ]
       },
       {
         "name": "결제 확인",
-        "total": 38,
+        "total": 64,
         "services": [
           {
+            "name": "사업자 물류",
+            "count": 25
+          },
+          {
             "name": "기타 구매대행",
-            "count": 14
+            "count": 23
           },
           {
             "name": "가구·대형화물",
             "count": 9
-          },
-          {
-            "name": "사업자 물류",
-            "count": 8
           },
           {
             "name": "자전거",
@@ -392,15 +392,15 @@
       },
       {
         "name": "배송 진행·완료",
-        "total": 20,
+        "total": 44,
         "services": [
           {
-            "name": "기타 구매대행",
-            "count": 10
+            "name": "사업자 물류",
+            "count": 21
           },
           {
-            "name": "사업자 물류",
-            "count": 6
+            "name": "기타 구매대행",
+            "count": 19
           },
           {
             "name": "가구·대형화물",
@@ -420,27 +420,27 @@
     "lossReasons": [
       {
         "name": "구매 여부 미확정",
-        "total": 97,
+        "total": 153,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 43
+            "count": 84
           },
           {
             "name": "가구·대형화물",
             "count": 25
           },
           {
+            "name": "사업자 물류",
+            "count": 23
+          },
+          {
             "name": "자전거",
             "count": 10
           },
           {
-            "name": "사업자 물류",
-            "count": 9
-          },
-          {
             "name": "의류",
-            "count": 4
+            "count": 5
           },
           {
             "name": "명품 구매대행",
