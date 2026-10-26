@@ -1,6 +1,6 @@
 {
   "status": "success",
-  "refreshedAt": "2026-10-27T08:50:49.481784+09:00",
+  "refreshedAt": "2026-10-27T08:57:26.061155+09:00",
   "scope": {
     "totalSeen": 4432,
     "readEligible": 4402,
@@ -23,7 +23,7 @@
   },
   "sources": [
     {
-      "name": "확인 필요",
+      "name": "모름",
       "count": 3971
     },
     {
@@ -188,7 +188,7 @@
   "details": {
     "sources": [
       {
-        "name": "확인 필요",
+        "name": "모름",
         "total": 3971,
         "services": [
           {
