@@ -1,28 +1,33 @@
 {
-  "status": "collecting",
-  "refreshedAt": "2026-10-26T15:15:00+09:00",
+  "status": "success",
+  "refreshedAt": "2026-10-26T15:46:58+09:00",
   "scope": {
     "totalSeen": 100,
     "readEligible": 84,
     "unreadExcluded": 16,
-    "reviewed": 12
+    "reviewed": 67,
+    "unreadExcludedAtRecheck": 15
   },
   "summary": {
-    "reviewed": 12,
-    "success": 6,
-    "failure": 1,
-    "inProgress": 5,
+    "reviewed": 67,
+    "success": 25,
+    "failure": 6,
+    "inProgress": 36,
     "needsReview": 0,
-    "successRate": 86
+    "successRate": 81
   },
   "sources": [
     {
-      "name": "네이버 블로그",
-      "count": 2
+      "name": "확인 필요",
+      "count": 41
     },
     {
       "name": "홈페이지",
-      "count": 1
+      "count": 16
+    },
+    {
+      "name": "네이버 블로그",
+      "count": 5
     },
     {
       "name": "카카오채널",
@@ -30,59 +35,59 @@
     },
     {
       "name": "기존 고객",
-      "count": 1
+      "count": 2
     },
     {
       "name": "과거 콘텐츠",
       "count": 1
-    },
-    {
-      "name": "확인 필요",
-      "count": 5
     }
   ],
   "categories": [
     {
       "name": "가구·대형화물",
-      "count": 5
-    },
-    {
-      "name": "자전거",
-      "count": 3
-    },
-    {
-      "name": "사업자 물류",
-      "count": 1
-    },
-    {
-      "name": "명품 구매대행",
-      "count": 1
-    },
-    {
-      "name": "의류",
-      "count": 1
+      "count": 26
     },
     {
       "name": "기타 구매대행",
+      "count": 17
+    },
+    {
+      "name": "자전거",
+      "count": 8
+    },
+    {
+      "name": "사업자 물류",
+      "count": 7
+    },
+    {
+      "name": "티켓",
+      "count": 5
+    },
+    {
+      "name": "명품 구매대행",
+      "count": 3
+    },
+    {
+      "name": "의류",
       "count": 1
     }
   ],
   "funnel": [
     {
       "name": "문의 확인",
-      "count": 12
+      "count": 67
     },
     {
       "name": "견적·안내",
-      "count": 9
+      "count": 36
     },
     {
       "name": "결제 확인",
-      "count": 6
+      "count": 22
     },
     {
       "name": "배송 진행·완료",
-      "count": 3
+      "count": 8
     }
   ],
   "lossReasons": [
@@ -91,8 +96,12 @@
       "count": 1
     },
     {
-      "name": "결과 확인 전",
+      "name": "가격·취소",
       "count": 5
+    },
+    {
+      "name": "결과 확인 전",
+      "count": 36
     }
   ],
   "strengths": [
@@ -106,5 +115,5 @@
     "현금 부담으로 멈춘 고객에게 결제 시점과 준비할 금액을 단계별로 쉽게 보여주세요.",
     "상담이 끝날 때 성공·보류·실패와 이유를 한 줄로 기록하세요."
   ],
-  "methodology": "개인정보를 뺀 집계입니다. 안 읽은 숫자 배지가 있는 상담은 열지 않았습니다. 각 단계 비율은 처음 문의 12건을 100%로 계산합니다. 성공은 입금·결제·배송 진행이 대화에서 확인된 경우만 셌습니다. 현재 읽은 상담 중 12건을 확인한 중간 결과이므로 전체 분석이 끝나면 수치가 바뀔 수 있습니다."
+  "methodology": "개인정보를 뺀 집계입니다. 읽지 않은 숫자 배지가 있는 상담은 열지 않았습니다. 각 상담은 열기 직전에 다시 읽음 상태를 확인했고, 읽지 않음 또는 확인 불가 15건은 건너뛰었습니다. 각 단계 비율은 확인한 첫 문의 67건을 100%로 계산합니다. 대화 문구로 단계 신호를 자동 분류한 결과이며, 애매한 상담은 진행 중으로 남겼습니다."
 }
