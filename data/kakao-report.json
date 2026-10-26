@@ -1,22 +1,22 @@
 {
   "status": "success",
-  "refreshedAt": "2026-10-26T22:51:48.745720+09:00",
+  "refreshedAt": "2026-10-26T22:52:22.853363+09:00",
   "scope": {
     "totalSeen": 4432,
     "readEligible": 4402,
     "unreadExcluded": 30,
-    "reviewed": 4393,
-    "excludedNonInquiry": 33,
-    "pendingReview": 14,
+    "reviewed": 4395,
+    "excludedNonInquiry": 35,
+    "pendingReview": 12,
     "oldestFound": "2024-05",
-    "fullHistoryReviewed": 1700,
-    "fullHistoryPending": 2700
+    "fullHistoryReviewed": 1800,
+    "fullHistoryPending": 2600
   },
   "summary": {
     "reviewed": 4360,
-    "success": 1033,
-    "failure": 100,
-    "inProgress": 3227,
+    "success": 1035,
+    "failure": 99,
+    "inProgress": 3226,
     "needsReview": 0,
     "successRate": 24,
     "successDefinition": "배송 진행·완료"
@@ -24,19 +24,19 @@
   "sources": [
     {
       "name": "확인 필요",
-      "count": 3125
+      "count": 3120
     },
     {
       "name": "홈페이지",
-      "count": 638
+      "count": 642
     },
     {
       "name": "기존 고객",
-      "count": 307
+      "count": 306
     },
     {
       "name": "네이버 블로그",
-      "count": 199
+      "count": 201
     },
     {
       "name": "유튜브",
@@ -92,25 +92,25 @@
     },
     {
       "name": "견적·안내",
-      "count": 2933
+      "count": 2935
     },
     {
       "name": "결제 확인",
-      "count": 1239
+      "count": 1240
     },
     {
       "name": "배송 진행·완료",
-      "count": 1033
+      "count": 1035
     }
   ],
   "lossReasons": [
     {
       "name": "구매 여부 미확정",
-      "count": 3227
+      "count": 3226
     },
     {
       "name": "기타 중단 이유",
-      "count": 99
+      "count": 98
     },
     {
       "name": "가격·결제 부담 또는 취소",
@@ -128,16 +128,16 @@
     "견적 뒤 1일, 3일, 7일에 다시 연락하고 결과를 남기세요.",
     "취급 불가 상품은 가능한 대안을 함께 알려주세요."
   ],
-  "methodology": "전체 상담 목록 4,432건을 찾았습니다. 읽지 않은 30건은 열지 않았습니다. 현재 본문까지 확인한 4,393건 중 고객 문의가 없는 회사 발신 안내 33건을 빼고, 실제 고객 문의 4,360건만 성과 계산에 사용합니다. 각 단계 비율은 확인한 첫 문의 4360건을 100%로 계산합니다. 최종 성공은 배송 진행·완료가 대화에서 확인된 1033건만 셌습니다. 구매 여부 미확정은 실패가 아닙니다. 현재 1,700건은 첫 문의까지 전체 대화를 끝까지 불러와 다시 분석했고, 나머지 2,700건은 전체 대화 재확인 중입니다.",
+  "methodology": "전체 상담 목록 4,432건을 찾았습니다. 읽지 않은 30건은 열지 않았습니다. 현재 본문까지 확인한 4,395건 중 고객 문의가 없는 회사 발신 안내 35건을 빼고, 실제 고객 문의 4,360건만 성과 계산에 사용합니다. 각 단계 비율은 확인한 첫 문의 4360건을 100%로 계산합니다. 최종 성공은 배송 진행·완료가 대화에서 확인된 1035건만 셌습니다. 구매 여부 미확정은 실패가 아닙니다. 현재 1,800건은 첫 문의까지 전체 대화를 끝까지 불러와 다시 분석했고, 나머지 2,600건은 전체 대화 재확인 중입니다.",
   "details": {
     "sources": [
       {
         "name": "확인 필요",
-        "total": 3125,
+        "total": 3120,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 1963
+            "count": 1959
           },
           {
             "name": "가구·대형화물",
@@ -149,7 +149,7 @@
           },
           {
             "name": "티켓",
-            "count": 108
+            "count": 107
           },
           {
             "name": "자전거",
@@ -167,11 +167,11 @@
       },
       {
         "name": "홈페이지",
-        "total": 638,
+        "total": 642,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 410
+            "count": 413
           },
           {
             "name": "사업자 물류",
@@ -183,7 +183,7 @@
           },
           {
             "name": "티켓",
-            "count": 41
+            "count": 42
           },
           {
             "name": "자전거",
@@ -201,11 +201,11 @@
       },
       {
         "name": "기존 고객",
-        "total": 307,
+        "total": 306,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 224
+            "count": 223
           },
           {
             "name": "사업자 물류",
@@ -235,11 +235,11 @@
       },
       {
         "name": "네이버 블로그",
-        "total": 199,
+        "total": 201,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 102
+            "count": 104
           },
           {
             "name": "가구·대형화물",
@@ -361,11 +361,11 @@
       },
       {
         "name": "견적·안내",
-        "total": 2933,
+        "total": 2935,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 1774
+            "count": 1776
           },
           {
             "name": "가구·대형화물",
@@ -395,7 +395,7 @@
       },
       {
         "name": "결제 확인",
-        "total": 1239,
+        "total": 1240,
         "services": [
           {
             "name": "기타 구매대행",
@@ -411,7 +411,7 @@
           },
           {
             "name": "티켓",
-            "count": 43
+            "count": 44
           },
           {
             "name": "자전거",
@@ -429,11 +429,11 @@
       },
       {
         "name": "배송 진행·완료",
-        "total": 1033,
+        "total": 1035,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 715
+            "count": 716
           },
           {
             "name": "가구·대형화물",
@@ -445,7 +445,7 @@
           },
           {
             "name": "티켓",
-            "count": 16
+            "count": 17
           },
           {
             "name": "자전거",
@@ -465,7 +465,7 @@
     "lossReasons": [
       {
         "name": "구매 여부 미확정",
-        "total": 3227,
+        "total": 3226,
         "services": [
           {
             "name": "기타 구매대행",
@@ -481,7 +481,7 @@
           },
           {
             "name": "티켓",
-            "count": 137
+            "count": 136
           },
           {
             "name": "자전거",
@@ -499,11 +499,11 @@
       },
       {
         "name": "기타 중단 이유",
-        "total": 99,
+        "total": 98,
         "services": [
           {
             "name": "기타 구매대행",
-            "count": 69
+            "count": 68
           },
           {
             "name": "가구·대형화물",
