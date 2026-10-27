@@ -76,4 +76,37 @@ window.renderBusiness=function(b){if(!b||!b.months)return '<p>실적 데이터�
  ${ins.good.length?section('good','좋아요','잘되고 있는 점','<ul>'+ins.good.map(t=>`<li>${E(t)}</li>`).join('')+'</ul>'):''}
  ${section('warn','확인','살펴볼 점','<ul>'+ins.warn.map(t=>`<li>${E(t)}</li>`).join('')+'</ul>')}
  ${yr}<p class="note">${b.notes.map(E).join('<br>')}</p>`};
+
+// 월별 손익 정산: Marco's monthly profit sheets (data: live.settlement from the encrypted vault)
+window.renderSettlement=function(st){if(!st||!st.months)return '<p>손익 정산 데이터가 아직 없습니다.</p>';
+ const ms=st.months,full=ms.filter(m=>m.complete),lab=m=>Number(m.month.slice(5))+'월',T=st.totals,last=full[full.length-1],prev=full[full.length-2];
+ const best=full.reduce((a,b)=>b.contribution>a.contribution?b:a,full[0]);
+ const kpis=[['공헌이익 합계 ('+T.months+'개월)',man(T.contribution),''],['월평균 공헌이익',man(T.contribution/T.months),''],['가장 높은 달',lab(best)+' · '+man(best.contribution),''],[lab(last)+' 공헌이익',man(last.contribution),pc(prev.contribution,last.contribution)]]
+  .map(([k,v,d])=>`<div class="biz-kpi"><span>${k}</span><b>${v}</b>${d===''?'':`<small class="${d>=0?'biz-up':'biz-down'}">${d>=0?'▲':'▼'} ${Math.abs(d).toFixed(1)}% (${lab(prev)} 대비)</small>`}</div>`).join('');
+ // stacked bars: 팬스타 / 나르다 / 기타 수익, with fixed cost tick and contribution label
+ const W=640,H=230,L=48,R=12,Tp=18,B=28,iw=W-L-R,ih=H-Tp-B,bw=iw/ms.length,x=i=>L+bw*i+bw/2,mx=Math.max(...full.map(m=>m.ship+m.otherTotal)),y=v=>ih*v/mx,short=v=>(v/1e4).toLocaleString('ko-KR',{maximumFractionDigits:0})+'만';
+ const COL={pan:'#5169ee',nar:'#8f9cf3',oth:'#c7cdf8',fix:'#d1574b'};
+ const bars=ms.map((m,i)=>{let w=bw*.56,x0=x(i)-w/2,base=Tp+ih;if(!m.complete)return `<rect x="${x0}" y="${Tp+ih*.55}" width="${w}" height="${ih*.45}" fill="none" stroke="#d5d9e3" stroke-dasharray="4 4" rx="3"/><text class="val" x="${x(i)}" y="${Tp+ih*.55-6}" text-anchor="middle">요약표 없음</text><text x="${x(i)}" y="${H-9}" text-anchor="middle">${lab(m)}</text>`;let parts=[[m.panstar,COL.pan,'팬스타'],[m.narda,COL.nar,'나르다'],[m.otherTotal,COL.oth,'기타 수익']];
+  let g=parts.map(([v,c,k])=>{let h=y(v||0);base-=h;return `<rect x="${x0}" y="${base}" width="${w}" height="${h}" fill="${c}"><title>${E(lab(m))} ${E(k)} ${won(v)}</title></rect>`}).join('');
+  let fy=Tp+ih-y(m.fixedTotal);g+=`<line x1="${x0-3}" x2="${x0+w+3}" y1="${fy}" y2="${fy}" stroke="${COL.fix}" stroke-width="2"><title>${E(lab(m))} 고정비 ${won(m.fixedTotal)}</title></line><text class="val" x="${x(i)}" y="${base-5}" text-anchor="middle">공헌 ${short(m.contribution)}</text>`;
+  return g+`<text x="${x(i)}" y="${H-9}" text-anchor="middle">${lab(m)}</text>`}).join('');
+ const axis=[0,.5,1].map(f=>`<line x1="${L}" x2="${W-R}" y1="${Tp+ih*(1-f)}" y2="${Tp+ih*(1-f)}" stroke="#eef0f4"/><text x="${L-6}" y="${Tp+ih*(1-f)+3}" text-anchor="end">${f?short(mx*f):'0'}</text>`).join('');
+ const chart=`<div class="biz-trend" style="grid-template-columns:1fr"><div class="card"><h3>월별 수익 구성과 공헌이익</h3><div class="biz-legend"><span><i style="background:${COL.pan}"></i>팬스타 배송비 순수익</span><span><i style="background:${COL.nar}"></i>나르다 배송비 순수익</span><span><i style="background:${COL.oth}"></i>기타 수익</span><span><i style="background:${COL.fix};height:3px;vertical-align:3px"></i>고정비 선</span><span>막대 = 배송비 순수익 + 기타 수익 · 위 숫자 = 공헌이익(막대 − 고정비)</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="월별 손익">${axis}${bars}</svg></div></div>`;
+ // full table
+ const cell=(m,f)=>{let v=f(m);return `<td>${v==null||Number.isNaN(v)?'<span class="biz-flat">—</span>':won(v)}</td>`};
+ const rows=[['팬스타 배송비 순수익',m=>m.complete?m.panstar:null],['나르다 배송비 순수익',m=>m.narda],['배송비 순수익 계',m=>m.complete?m.ship:null,1],['기타 수익',m=>m.complete?m.otherTotal:null],['고정비',m=>m.complete?-m.fixedTotal:null],['공헌이익',m=>m.complete?m.contribution:null,1],['세금 (20%)',m=>m.complete?m.tax:null],['분배 (80%, 3.3% 공제 후)',m=>m.complete?m.distributionNet:null],['분배 10%',m=>m.complete?m.share10:null],['분배 45% (각)',m=>m.complete?m.share45:null],
+  ['팬스타 순이익 (마르코 기준)',m=>m.complete?null:m.panstarMarco],['구매대행 수수료',m=>m.complete?null:(m.buyFee||{}).krw],['배송비 외 재포장',m=>m.complete?null:(m.repack||{}).krw]];
+ const table=`<section class="card biz-year"><div class="cardhead"><h2>월별 손익표</h2><span class="small">원 · 8·9월 손익표 없음</span></div><div class="biz-scroll"><table><thead><tr><th>항목</th>${ms.map(m=>`<th>${lab(m)}${m.complete?'':' <small class="biz-flat">일부</small>'}</th>`).join('')}<th>합계 (요약표 ${T.months}개월)</th></tr></thead><tbody>${rows.map(([k,f,strong])=>`<tr${strong?' class="biz-total"':''}><td>${E(k)}</td>${ms.map(m=>cell(m,f)).join('')}<td>${(()=>{let xs=full.map(f).filter(v=>v!=null);return xs.length?won(xs.reduce((a,b)=>a+b,0)):'<span class="biz-flat">—</span>'})()}</td></tr>`).join('')}</tbody></table></div></section>`;
+ // breakdowns
+ const list=(xs)=>xs.map(o=>`<div class="biz-row"><span>${E(o.name)}</span><b>${won(o.krw)}</b></div>`).join('');
+ const brk=`<div class="biz-mix" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))">${full.map(m=>`<div><h3>${lab(m)} 기타 수익 · 고정비</h3>${list(m.other)}<div class="biz-row" style="border-top:1px solid var(--line);padding-top:6px"><span>기타 수익 계</span><b>${won(m.otherTotal)}</b></div><div style="height:8px"></div>${list(m.fixed)}<div class="biz-row" style="border-top:1px solid var(--line);padding-top:6px"><span>고정비 계</span><b>${won(m.fixedTotal)}</b></div>${m.notes.length?`<p class="note" style="margin-top:8px">${m.notes.map(E).join('<br>')}</p>`:''}</div>`).join('')}</div>`;
+ // carriers
+ const cm=ms.filter(m=>Object.keys(m.carrier||{}).length);
+ const carr=`<div class="biz-mix" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))"><div><h3>나르다 · 건수와 건당 수익률</h3>${cm.filter(m=>m.carrier.nardaCount).map(m=>`<div class="biz-row"><span>${lab(m)}</span><b>${n(m.carrier.nardaCount)}건 · ${m.carrier.nardaMargin}%</b></div>`).join('')}<p class="note">3월(유가 상승 전) 37.35% → 5월 27.53%. 유가 상승 뒤 건당 수익률이 크게 떨어졌습니다.</p></div>
+  <div><h3>팬스타 · 건수</h3>${cm.filter(m=>m.carrier.panstarCount).map(m=>`<div class="biz-row"><span>${lab(m)}</span><b>${n(m.carrier.panstarCount)}건 · ${man(m.panstar)}</b></div>`).join('')}<p class="note">4월은 건수가 22% 늘었지만 순수익은 7% 줄었습니다.</p></div>
+  <div><h3>운임 (엔)</h3>${cm.filter(m=>m.carrier.panstarFreightJpy||m.carrier.nardaFreightJpy).map(m=>`<div class="biz-row"><span>${lab(m)}</span><b>${[m.carrier.panstarFreightJpy?'팬스타 ¥'+n(m.carrier.panstarFreightJpy):'',m.carrier.nardaFreightJpy?'나르다 ¥'+n(m.carrier.nardaFreightJpy):''].filter(Boolean).join(' · ')}</b></div>`).join('')}<p class="note">운임비 기준. 수수료를 더한 금액은 손익표 원본 참고.</p></div></div>`;
+ const partialNotes=ms.filter(m=>!m.complete).map(m=>`${lab(m)}: ${m.notes.join(' ')}`);
+ return `<div class="easy-report-head"><div><div class="easy-tag">월별 손익</div><h2>우마이직구 손익 정산 · 2026년</h2><p>${E(st.source)}. 공헌이익 = 배송비 순수익 + 기타 수익 − 고정비.</p></div></div>
+ <div class="biz-kpis">${kpis}</div>${chart}${table}${section('info','구성','달마다 무엇이 들어왔고 나갔나',brk)}${section('summary','배송','배송사별 흐름',carr)}
+ <p class="note">${partialNotes.map(E).join('<br>')}<br>8·9월 손익표는 아직 채널에 없습니다. 고객 이름은 넣지 않았습니다.</p>`};
 })();
