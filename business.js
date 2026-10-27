@@ -12,7 +12,9 @@ const css=`.biz-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;m
 .biz-bar{display:inline-block;height:8px;border-radius:4px;background:#b8c1f6;vertical-align:middle;margin-right:8px}.biz-total td{font-weight:700;background:#fafbfc}
 .biz-callouts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.biz-callouts div{background:#f6f7ff;border-radius:10px;padding:14px}.biz-callouts span{font-size:11px;color:var(--muted)}.biz-callouts b{display:block;font-size:17px;margin-top:6px}
 .biz-scroll{overflow-x:auto}
-@media(max-width:900px){.biz-kpis,.biz-callouts{grid-template-columns:repeat(2,1fr)}.biz-flow,.biz-mix{grid-template-columns:1fr}}`;
+.biz-trend{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}.biz-trend .card{padding:18px}.biz-trend h3{font-size:14px;margin:0 0 4px}.biz-legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin:6px 0 4px}.biz-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.biz-trend svg text{font-size:10px;fill:#9ca5b5}.biz-trend svg .val{fill:#526078;font-size:9.5px}
+@media(max-width:900px){.biz-kpis,.biz-callouts{grid-template-columns:repeat(2,1fr)}.biz-flow,.biz-mix,.biz-trend{grid-template-columns:1fr}}`;
 const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
 const E=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>v==null?'—':Math.round(v).toLocaleString('ko-KR');
@@ -29,6 +31,20 @@ function insights(c,p,b){let good=[],warn=[],ch=b.change;
  let cov=share(c.gaApplications,c.applications);warn.push(`GA4는 ${c.label} 배송대행 신청 ${n(c.applications)}건 중 ${n(c.gaApplications)}건(${cov}%)만 기록했습니다. 신청·결제는 관리자 숫자를 기준으로 보세요.`);
  let adm=share(c.adminViews,c.adminViews+c.customerViews);if(adm>=10)warn.push(`GA4 페이지 조회의 ${adm}%가 직원이 본 관리자 화면입니다. 고객 숫자를 보려면 관리자 화면을 GA4에서 빼야 합니다.`);
  return {good,warn}}
+// 12-month trends: stacked sales bars, and new members vs paying volume
+const C={ship:'#5169ee',buy:'#b8c1f6',mem:'#28a27d',pay:'#5169ee'};
+function trends(ms){const W=520,H=210,L=44,R=40,T=14,B=26,iw=W-L-R,ih=H-T-B,bw=iw/ms.length,x=i=>L+bw*i+bw/2;
+ const axis=(mx,fmt)=>[0,.5,1].map(f=>`<line x1="${L}" x2="${W-R}" y1="${T+ih*(1-f)}" y2="${T+ih*(1-f)}" stroke="#eef0f4"/><text x="${L-6}" y="${T+ih*(1-f)+3}" text-anchor="end">${fmt(mx*f)}</text>`).join('')+ms.map((m,i)=>`<text x="${x(i)}" y="${H-8}" text-anchor="middle">${m.month.slice(2).replace('-','.')}</text>`).join('');
+ const smx=Math.max(...ms.map(m=>m.sales),1),sy=v=>ih*v/smx,short=v=>v>=1e8?(v/1e8).toFixed(1)+'억':Math.round(v/1e4)+'만';
+ const sales=ms.map((m,i)=>{let a=sy(m.shipSales),b2=sy(m.buySales),w=bw*.62,x0=x(i)-w/2,o=m.partial?' opacity=".45"':'';
+  return `<g${o}><rect x="${x0}" y="${T+ih-a}" width="${w}" height="${a}" fill="${C.ship}" rx="2"><title>${E(mname(m))} 배송대행 ${won(m.shipSales)}</title></rect><rect x="${x0}" y="${T+ih-a-b2}" width="${w}" height="${b2}" fill="${C.buy}" rx="2"><title>${E(mname(m))} 구매대행 ${won(m.buySales)}</title></rect><text class="val" x="${x(i)}" y="${T+ih-a-b2-4}" text-anchor="middle">${short(m.sales)}</text></g>`}).join('');
+ // payments on the left axis, new members on their own right axis (they are ~10x smaller)
+ const pmx=Math.max(...ms.map(m=>m.shipPayments+m.buyPayments),1),nmx=Math.max(...ms.map(m=>m.newMembers),1);
+ const line=(k,col,f,mx)=>{const y=v=>T+ih-ih*v/mx;return `<polyline fill="none" stroke="${col}" stroke-width="2.2" points="${ms.map((m,i)=>`${x(i)},${y(f(m))}`).join(' ')}"/>`+ms.map((m,i)=>`<circle cx="${x(i)}" cy="${y(f(m))}" r="3" fill="${col}"${m.partial?' opacity=".45"':''}><title>${E(mname(m))} ${k} ${n(f(m))}</title></circle>`).join('')};
+ const right=[0,.5,1].map(f=>`<text x="${W-R+6}" y="${T+ih*(1-f)+3}" fill="${C.mem}" style="fill:${C.mem}">${n(nmx*f)}</text>`).join('');
+ const people=line('결제 건수',C.pay,m=>m.shipPayments+m.buyPayments,pmx)+line('신규 회원',C.mem,m=>m.newMembers,nmx)+right;
+ return `<div class="biz-trend"><div class="card"><h3>매출 추이</h3><div class="biz-legend"><span><i style="background:${C.ship}"></i>배송대행</span><span><i style="background:${C.buy}"></i>구매대행</span><span>흐린 막대: 진행 중인 달</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="최근 12개월 매출">${axis(smx,v=>v?short(v):'0')}${sales}</svg></div>
+  <div class="card"><h3>고객 추이</h3><div class="biz-legend"><span><i style="background:${C.pay}"></i>결제 건수(배송+구매대행, 왼쪽 축)</span><span><i style="background:${C.mem}"></i>신규 회원(오른쪽 축)</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="최근 12개월 결제 건수와 신규 회원">${axis(pmx,v=>n(v))}${people}</svg></div></div>`}
 function section(tone,tag,title,body){return `<section class="easy-section ${tone}"><div class="easy-tag">${tag}</div><h2>${E(title)}</h2>${body}</section>`}
 window.renderBusiness=function(b){if(!b||!b.months)return '<p>실적 데이터가 아직 없습니다.</p>';
  const ms=b.months,c=ms.find(m=>m.month===b.current),p=ms.find(m=>m.month===b.previous),ch=b.change;
@@ -53,6 +69,7 @@ window.renderBusiness=function(b){if(!b||!b.months)return '<p>실적 데이터�
   <p class="note">방문자는 달마다 따로 센 숫자라 합계를 내지 않습니다. 배송대행 ${man(y.shipSales)} · 구매대행 ${man(y.buySales)} · 예치금 충전 ${man(y.topups)}(매출에 미포함).</p></section>`;
  return `<div class="easy-report-head"><div><div class="easy-tag">실적 리포트</div><h2>${E(mname(c))} 실적 · ${E(p.label)}과 비교</h2><p>관리자 페이지의 실제 결제·회원·신청 숫자와 GA4 방문 숫자를 합쳤습니다. ${E(b.throughDate)}까지 집계.</p></div></div>
  <div class="biz-kpis">${kpis}</div>
+ ${trends(ms)}
  ${section('summary','흐름',`${c.label} 방문에서 결제까지`,`<div class="biz-flow"><div><h3>사람</h3>${bars(people,'명')}</div><div><h3>일</h3>${bars(work,'건')}<div class="biz-step"><span>구매대행 결제</span><span class="biz-track"></span><b>${n(c.buyPayments)}건</b><em>별도 서비스</em></div></div></div>`)}
  ${section('info','돈',`${c.label} 매출 자세히`,mix+chan)}
  ${ins.good.length?section('good','좋아요','잘되고 있는 점','<ul>'+ins.good.map(t=>`<li>${E(t)}</li>`).join('')+'</ul>'):''}
