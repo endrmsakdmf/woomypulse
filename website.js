@@ -25,17 +25,17 @@ function gaOnePage(ga,reports,host,p){
  const known=dem.filter(r=>r.age!=='unknown'),demTot=sum(dem,'active_users'),ages=group(known,'age','active_users').sort((a,b)=>a[0].localeCompare(b[0])),genders=group(dem.filter(r=>r.gender!=='unknown'),'gender','active_users').map(([k,v])=>[{male:'남성',female:'여성'}[k]||k,v]);
  const c=com[0];
  return `<div class="easy-report-head"><div><div class="easy-tag">GA4 한눈에</div><h2>최근 ${gaEsc(p)}일 홈페이지 숫자 전부</h2><p>${gaEsc(host)} · ${gaEsc(ga?.throughDate||'')}까지. 보고서마다 위쪽 몇 줄만 모았습니다. 사람 수는 합산하지 않습니다.</p></div></div>
- <div class="biz-kpis" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">${kpis}</div>
- <div class="biz-mix" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+ <div class="biz-kpis" style="grid-template-columns:repeat(auto-fit,minmax(min(130px,45%),1fr))">${kpis}</div>
+ <div class="biz-mix" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))">
   ${box('어디서 왔나','세션 소스 / 매체 · 세션',bars(group(acq,'session_source_medium','sessions').slice(0,6),'회',sum(acq,'sessions')))}
   ${box('처음 온 사람','최초 유입 경로 · 신규 사용자',bars(group(usr,'first_user_source_medium','newusers').slice(0,6),'명'))}
   ${box('사용한 기기','기기 · 세션',bars(devices,'회',techTot)+`<p class="small" style="margin-top:10px">브라우저: ${browsers.map(([k,v])=>`${gaEsc(k)} ${pct(v,techTot)}`).join(' · ')}</p>`)}
  </div>
- <div class="biz-mix" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+ <div class="biz-mix" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))">
   ${box('많이 본 페이지 (고객 화면)',`직원 관리자 화면(/elpisadm) ${pct(sum(admin,'screen_page_views'),pv)}는 뺐습니다 · 페이지 조회`,bars(cust.map(r=>[r.page_path,r.screen_page_views]).sort((a,b)=>b[1]-a[1]).slice(0,8),'회'))}
   ${box('눌러본 행동','이벤트 · 건수',bars(group(ev,'event_name','event_count').slice(0,8),'건'))}
  </div>
- <div class="biz-mix" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+ <div class="biz-mix" style="margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))">
   ${box('사는 지역','국가 · 활성 사용자',bars(group(geo,'country','active_users').slice(0,5),'명'))}
   ${box('나이·성별',`GA4가 알아낸 사람만 · 모르는 비율 ${pct(sum(dem.filter(r=>r.age==='unknown'),'active_users'),demTot)}`,bars(ages,'명')+'<div style="margin-top:8px"></div>'+bars(genders,'명'))}
   ${box('구매','GA4 전자상거래 기록',c?`<div class="biz-row"><span>구매 이벤트</span><b>${n(c.ecommerce_purchases)}건</b></div><div class="biz-row"><span>구매 매출(GA4)</span><b>${n(c.purchase_revenue)} ${gaEsc(c.property_currency||'')}</b></div><div class="biz-row"><span>상품 이름</span><b>${gaEsc(items.map(i=>i.item_name).slice(0,3).join(', ')||'—')}</b></div><p class="note" style="margin-top:8px">GA4 구매 매출 값이 실제보다 매우 크게 기록되고 있습니다. 매출은 ‘실적 리포트’의 관리자 숫자를 기준으로 보세요.</p>`:'<p class="small">데이터 없음</p>')}

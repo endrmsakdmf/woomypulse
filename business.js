@@ -14,7 +14,8 @@ const css=`.biz-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;m
 .biz-scroll{overflow-x:auto}
 .biz-trend{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}.biz-trend .card{padding:18px}.biz-trend h3{font-size:14px;margin:0 0 4px}.biz-legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin:6px 0 4px}.biz-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
 .biz-trend svg text{font-size:10px;fill:#9ca5b5}.biz-trend svg .val{fill:#526078;font-size:9.5px}
-@media(max-width:900px){.biz-kpis,.biz-callouts{grid-template-columns:repeat(2,1fr)}.biz-flow,.biz-mix,.biz-trend{grid-template-columns:1fr}}`;
+@media(max-width:900px){.biz-kpis,.biz-callouts{grid-template-columns:repeat(2,minmax(0,1fr))}.biz-flow,.biz-mix,.biz-trend{grid-template-columns:1fr}}
+@media(max-width:720px){.biz-step{gap:8px;font-size:12px}.biz-step>span:first-child{width:72px}.biz-step b{width:auto;white-space:nowrap}.biz-step em{display:none}.biz-kpi b{font-size:20px}.biz-mix>div,.biz-trend .card{padding:14px}}`;
 const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
 const E=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=v=>v==null?'—':Math.round(v).toLocaleString('ko-KR');
