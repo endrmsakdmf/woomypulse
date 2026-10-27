@@ -95,7 +95,7 @@ window.renderSettlement=function(st){if(!st||!st.months)return '<p>손익 정산
  // full table
  const cell=(m,f)=>{let v=f(m);return `<td>${v==null||Number.isNaN(v)?'<span class="biz-flat">—</span>':won(v)}</td>`};
  const rows=[['팬스타 배송비 순수익',m=>m.complete?m.panstar:null],['나르다 배송비 순수익',m=>m.narda],['배송비 순수익 계',m=>m.complete?m.ship:null,1],['기타 수익',m=>m.complete?m.otherTotal:null],['고정비',m=>m.complete?-m.fixedTotal:null],['공헌이익',m=>m.complete?m.contribution:null,1],['세금 (20%)',m=>m.complete?m.tax:null],['분배 (80%, 3.3% 공제 후)',m=>m.complete?m.distributionNet:null],['분배 10%',m=>m.complete?m.share10:null],['분배 45% (각)',m=>m.complete?m.share45:null],
-  ['팬스타 순이익 (마르코 기준)',m=>m.complete?null:m.panstarMarco],['구매대행 수수료',m=>m.complete?null:(m.buyFee||{}).krw],['배송비 외 재포장',m=>m.complete?null:(m.repack||{}).krw]];
+  ['팬스타 순이익 (별도 기준)',m=>m.complete?null:m.panstarAlt],['구매대행 수수료',m=>m.complete?null:(m.buyFee||{}).krw],['배송비 외 재포장',m=>m.complete?null:(m.repack||{}).krw]];
  const table=`<section class="card biz-year"><div class="cardhead"><h2>월별 손익표</h2><span class="small">원 · 8·9월 손익표 없음</span></div><div class="biz-scroll"><table><thead><tr><th>항목</th>${ms.map(m=>`<th>${lab(m)}${m.complete?'':' <small class="biz-flat">일부</small>'}</th>`).join('')}<th>합계 (요약표 ${T.months}개월)</th></tr></thead><tbody>${rows.map(([k,f,strong])=>`<tr${strong?' class="biz-total"':''}><td>${E(k)}</td>${ms.map(m=>cell(m,f)).join('')}<td>${(()=>{let xs=full.map(f).filter(v=>v!=null);return xs.length?won(xs.reduce((a,b)=>a+b,0)):'<span class="biz-flat">—</span>'})()}</td></tr>`).join('')}</tbody></table></div></section>`;
  // breakdowns
  const list=(xs)=>xs.map(o=>`<div class="biz-row"><span>${E(o.name)}</span><b>${won(o.krw)}</b></div>`).join('');
